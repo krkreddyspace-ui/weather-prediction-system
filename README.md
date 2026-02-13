@@ -2,6 +2,7 @@
 
 Real-time Weather Intelligence & ML Forecasting System built with Streamlit + XGBoost
 
+🔗 **Live App:** https://your-app-name.streamlit.app 
 
 
 ---
