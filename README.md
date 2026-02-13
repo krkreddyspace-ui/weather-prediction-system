@@ -2,7 +2,7 @@
 
 Real-time Weather Intelligence & ML Forecasting System built with Streamlit + XGBoost
 
-🔗 **Live App:** https://smart-weather-air-quality-dashboard.streamlit.app/
+
 
 ---
 
