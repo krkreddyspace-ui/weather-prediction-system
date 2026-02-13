@@ -8,12 +8,13 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score, f
 from dotenv import load_dotenv
 import os
 import plotly.graph_objects as go
+load_dotenv()
 
 # -----------------------------
 # CONFIG
 # -----------------------------
 st.set_page_config(page_title="Smart Weather Dashboard", layout="wide")
-load_dotenv()
+
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 BASE_URL = "https://api.openweathermap.org/data/2.5/"
@@ -39,6 +40,11 @@ city = st.selectbox("Select City", cities)
 def get_location(city):
     params = {"q": city, "limit": 1, "appid": API_KEY}
     res = requests.get(GEO_URL, params=params).json()
+
+    if not res or isinstance(res, dict):
+        st.error("⚠ Failed to fetch location data. Check your API key or internet connection.")
+        st.stop()
+
     return res[0]["lat"], res[0]["lon"]
 
 @st.cache_data(ttl=600)
@@ -146,7 +152,7 @@ if st.button("Get Data"):
                                  mode='lines+markers',
                                  name="Temperature"))
         fig.update_layout(template="plotly_dark")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
         st.divider()
 
@@ -233,7 +239,7 @@ if st.button("Get Data"):
         fig2.add_trace(go.Scatter(y=y[:10], mode="lines+markers", name="Actual"))
         fig2.add_trace(go.Scatter(y=y_pred[:10], mode="lines+markers", name="Predicted"))
         fig2.update_layout(template="plotly_dark")
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, width='stretch' )
 
         st.divider()
 
